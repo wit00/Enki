@@ -1,0 +1,107 @@
+
+
+
+
+
+<html>
+  <head>
+    <title>
+     Enki
+    </title>
+    <link href="./css/bootstrap/bootstrap.css" rel="stylesheet">
+    <link href="./css/bootstrap/navbar.css" rel="stylesheet">
+    
+    <script type="text/javascript"
+            src="http://coffeescript.org/extras/coffee-script.js">
+    </script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+  </head>
+
+  <body>
+    <% flash.each do |name, msg| -%>
+      <%= content_tag :div, msg, class: name %>
+    <% end -%>
+    <div class="container">
+        <div class="navbar navbar-default">
+            <div class="navbar-header">
+   
+                <a class="navbar-brand" href="/">Enki</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                   <li><a href="about">about</a></li>
+                </ul>
+                <ul class="nav navbar-nav">
+                   <li><a href="cards">review my cards</a></li>
+                </ul>
+                <% if signed_in? %>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="logout">sign out</a></li>
+                </ul>
+                <% else %>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="login">sign in</a></li>
+                </ul>
+                <% end %>
+                
+            </div>
+            
+        </div>
+<p>
+  <strong>Question:</strong>
+  <%= @card.question %>
+</p>
+
+<button type="button" class="btn btn-primary" onclick="show_solution()">Show the solution</button>
+<p id = "answer">
+<br>
+    <div id="answer">  <% @card.answer %></div>
+</p>
+    <p>
+        <br>
+        How did you do?
+    </p>
+    <!--<button type="button" class="btn btn-success" >Got it!</button>-->
+    <div class = "row">
+        <div class = "col-xs-1">
+            <%= form_for(@card) do |f| %>
+                <% if @card.score < 5 %>
+                    <%= f.hidden_field :score, :value => @card.score + 1%>
+                    <%= f.submit :'got it!', :class=>"btn btn-success"%>
+                <% else %>
+                 <!-- this shouldn't happen when I've finished, but just in case, let's put an empty button here -->
+                  <%= link_to 'Got it!', cards_path, :class=>"btn btn-success" %>
+                <% end %>
+            <% end %>
+        </div>
+        <div class = "col-xs-1">
+            <%= form_for(@card) do |f| %>
+                <% if @card.score > 1 %>
+                    <%= f.hidden_field :score, :value => @card.score - 1%>
+                    <%= f.submit :'not yet', :class=>"btn btn-danger"%>
+                <% else %>
+                 <!-- this shouldn't happen when I've finished, but just in case, let's put an empty button here -->
+                    <%= link_to 'Not yet', cards_path, :class=>"btn btn-danger" %>
+                <% end %>
+            <% end %>
+        </div>
+    </div>
+
+
+
+<p><br><br><%= link_to 'edit this card', edit_card_path(@card) %> </p>
+
+    <script type="text/coffeescript">
+        @show_solution = () ->
+            document.getElementById("answer").innerHTML = Sring.raw("<%= raw @card.answer %>")
+            reload_typeset()
+            
+
+    </script>
+
+</body>
+</html>
+            
+    
+
+

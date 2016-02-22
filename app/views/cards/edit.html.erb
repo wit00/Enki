@@ -1,0 +1,54 @@
+<html>
+  <head>
+    <title>
+      Hello, World
+    </title>
+    <link href="./css/bootstrap/bootstrap.css" rel="stylesheet">
+    <link href="./css/bootstrap/navbar.css" rel="stylesheet">
+    
+    <script type="text/javascript"
+            src="http://coffeescript.org/extras/coffee-script.js">
+    </script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+  </head>
+
+  <body>
+    <script>set_up_scalar_form()</script>
+    <script>set_up_dot_product_form()</script>
+    <% flash.each do |name, msg| -%>
+      <%= content_tag :div, msg, class: name %>
+    <% end -%>
+    <div class="container">
+        <div class="navbar navbar-default">
+            <div class="navbar-header">
+   
+                <a class="navbar-brand" href=<%=root_path%>>Enki</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                   <li><a href=<%=about_path%>>about</a></li>
+                </ul>
+                <ul class="nav navbar-nav">
+                   <li><a href=<%=cards_path%>>review my cards</a></li>
+                </ul>
+                <% if signed_in? %>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href=<%=logout_path%>>sign out</a></li>
+                </ul>
+                <% else %>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href=<%=login_path%>>sign in</a></li>
+                </ul>
+                <% end %>
+            </div>
+            
+        </div>
+<h1>Editing Card</h1>
+
+<%= render 'form' %>
+
+<%= link_to 'view this card', @card, :class=>"btn btn-primary" %> 
+
+</body>
+</html>
+

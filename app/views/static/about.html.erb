@@ -1,0 +1,69 @@
+<html>
+  <head>
+    <title>
+      Hello, World
+    </title>
+    <link href="./css/bootstrap/bootstrap.css" rel="stylesheet">
+    <link href="./css/bootstrap/navbar.css" rel="stylesheet">
+    
+    <script type="text/javascript"
+            src="http://coffeescript.org/extras/coffee-script.js">
+    </script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+  </head>
+
+  <body>
+    <script>set_up_scalar_form()</script>
+    <script>set_up_dot_product_form()</script>
+    <% flash.each do |name, msg| -%>
+      <%= content_tag :div, msg, class: name %>
+    <% end -%>
+    <div class="container">
+        <div class="navbar navbar-default">
+            <div class="navbar-header">
+   
+                <a class="navbar-brand" href="/">Enki</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                   <li><a href="about">about</a></li>
+                </ul>
+                <ul class="nav navbar-nav">
+                   <li><a href="cards">review my cards</a></li>
+                </ul>
+                <% if signed_in? %>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="logout">sign out</a></li>
+                </ul>
+                <% else %>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="login">sign in</a></li>
+                </ul>
+                <% end %>
+            </div>
+            
+        </div>
+        <div class="jumbotron">
+            <h1>What is Enki?</h1>
+            <p>Enki is a place to learn math</p>
+            <br>
+            <p>What you see here is the beginning, a proof of concept made during koding's 2016 virtual hackathon. </p>
+        </div>
+        <div class="row">
+            <div class="col-xs-4">
+                <h2>How does this site work?</h2>
+                <p>I designed this site to give you an idea about how Enki will work when it's completed. You can sign in and out of the system. You can create, edit, delete, and review your learning cards. You can also generate cards with matrix multiplication examples.</p>
+            </div>
+            <div class="col-xs-4">
+                <h2>How will the final product help you learn?</h2>
+                <p>Enki begins by teaching you the old fashioned-way, with a textbook. You can then generate cards to later review what you've covered. Enki then uses those cards and a spaced learning repetition algorithm to maximize your learning efficiency.</p>
+            
+            </div>
+            <div class="col-xs-4">
+                <h2>What's next?</h2>
+                <p>This site is not production-ready. There is little security beyond the basics that rails offers, and I used rails scaffolding to get it up and running quickly. I need to implement the spaced learning reptition system, and I would like to cover lots of mathematics topics with this project. Most similar projects are limited in scope, and I would like to include everything from Algebra 1 - Calculus 3. </p>
+            </div>
+        </div>
+        
+    </body>
+</html>

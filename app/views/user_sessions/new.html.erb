@@ -1,0 +1,62 @@
+<html>
+  <head>
+    <title>
+     Enki
+    </title>
+    <link href="./css/bootstrap/bootstrap.css" rel="stylesheet">
+    <link href="./css/bootstrap/navbar.css" rel="stylesheet">
+    
+    <script type="text/javascript"
+            src="http://coffeescript.org/extras/coffee-script.js">
+    </script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+  </head>
+
+  <body>
+    <% flash.each do |name, msg| -%>
+      <%= content_tag :div, msg, class: name %>
+    <% end -%>
+    <div class="container">
+        <div class="navbar navbar-default">
+            <div class="navbar-header">
+   
+                <a class="navbar-brand" href="/">Enki</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                   <li><a href="about">about</a></li>
+                </ul>
+                <ul class="nav navbar-nav">
+                   <li><a href="cards">review my cards</a></li>
+                </ul>
+                <% if signed_in? %>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="logout">sign out</a></li>
+                </ul>
+                <% else %>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="login">sign in</a></li>
+                </ul>
+                <% end %>
+                
+            </div>
+            
+        </div>
+<% provide(:title, "Sign in") %>
+<h1> Log in </h1>
+<div class="row">
+    <div class="col-xs-6">
+        <%= form_for(:user_session, url:login_path) do |f| %>
+            <%= f.label :name %>
+            <%= f.text_field :name, class: 'form_control' %>
+            <%= f.label :email %>
+            <%= f.email_field :email, class: 'form_control' %>
+            <%= f.submit "Sign in", class: "btn btn-default" %>
+        <% end %>
+        <p>New to Enki?<%= link_to "Sign up!", new_user_path %></p>
+    </div>
+</div>
+</body>
+</html>
+            
+    

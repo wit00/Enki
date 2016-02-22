@@ -1,0 +1,160 @@
+<html>
+  <head>
+    <title>
+      Hello, World
+    </title>
+    <link href="./css/bootstrap/bootstrap.css" rel="stylesheet">
+    <link href="./css/bootstrap/navbar.css" rel="stylesheet">
+    
+    <script type="text/javascript"
+            src="http://coffeescript.org/extras/coffee-script.js">
+    </script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+  </head>
+
+  <body>
+    <div class="container">
+        <div class="navbar navbar-default">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Enki</a>
+            
+            </div>
+        </div>
+        <div class="jumbotron">
+            <h1>Matrix Multiplication</h1>
+            <p>Now that we know how to add and subtract matrices, it's time to learn matrix multiplication.</p>
+        </div>
+        <div class="row">
+            <div class="col-xs-6">
+                <h2>Scalar Multiplication</h2>
+                <p>Multiplying a matrix by a number (a scalar) is called scalar multiplication. </p>
+                <p id="scalar_demo">\[1*\begin{bmatrix}
+                1 & 2 & 3\\
+                4 & 5 & 6 
+                \end{bmatrix} = ?\]</p>
+                <button type="button" class="btn btn-default" onclick="reload_scalar_product_matrix()">
+                    Reload
+                </button>
+                <button type="button" class="btn btn-success" onclick="solve_matrix(return_scaled_matrix())">
+                    Solve it!
+                </button>
+            </div>
+           
+            <div class="col-xs-6">
+                <h2>Dot Product</h2>
+                <p>Multiplying two matrices together is called the dot product.</p>
+                <p id="dot_product_demo">\[
+                
+                \begin{bmatrix}
+                1 & 2 & 3\\
+                4 & 5 & 6 
+                \end{bmatrix} 
+                *
+                \begin{bmatrix}
+                7 & 8\\
+                9 & 10\\
+                11 & 12
+                \end{bmatrix}
+                = ?\]</p>
+                <button type="button" class="btn btn-default" onclick="reload_dot_product_matrix()">
+                    Reload
+                </button>
+                <button type="button" class="btn btn-success" onclick="solve_matrix_multiplication()">
+                    Solve it!
+                </button>
+            </div>
+        </div>
+
+
+    </div>
+    
+    <script type="text/coffeescript">
+
+
+        scalar = 1 
+        matrix = [1,2,3,4,5,6]
+        dot_matrix_1 = [[1,2,3],[4,5,6]]
+        dot_matrix_2 = [[7,8],[9,10],[11,12]]
+        scalar_multiplication_matrix = scalar*matrix
+        
+        reload_typeset = () ->
+            MathJax.Hub.Queue(["Typeset",MathJax.Hub])
+        
+        return_matrix_html = () ->
+            return scalar + "*\\begin{bmatrix}" + matrix[0] + " & " + matrix[1] + " & " + matrix[2] + "\\\\"+ matrix[3] + " & " + matrix[4] + " & " + matrix[5] + " \\end{bmatrix} = "
+        
+        get_matrix_html = () ->
+        
+        generate_random = (max) ->
+            return Math.floor(Math.random() * max)
+            
+        @reload_dot_product_matrix = () -> 
+            #dot_matrix_1 = generate_random(13) for element in row for row in dot_matrix_1
+            print_matrix_multiplication_html(dot_matrix_2)
+        
+        @reload_scalar_product_matrix = () ->
+            reload_matrix_html("scalar_demo")
+            
+        reload_matrix_html = (element) ->
+            scalar = generate_random(13)
+            matrix = (generate_random(13) for num in matrix)
+            html_first_part = "<p id=\"demo\">\\["
+            html_last_part = "?\\]</p>"
+            document.getElementById(element).innerHTML =  html_first_part + return_matrix_html() + html_last_part
+            reload_typeset()
+        
+        @return_scaled_matrix = () -> 
+            return (scalar * num for num in matrix)
+    
+        @solve_matrix_multiplication = () ->
+            print_matrix_multiplication_html(matrix_multiplication(dot_matrix_1,dot_matrix_2))
+
+        @solve_matrix = (result_matrix) -> 
+            scaled_matrix = result_matrix
+            html_first_part = "<p id=\"demo\">\\["
+            html_second_part = "\\begin{bmatrix}"
+            html_third_part = scaled_matrix[0] + " & " + scaled_matrix[1] + " & " + scaled_matrix[2] + "\\\\"+ scaled_matrix[3] + " & " + scaled_matrix[4] + " & " + scaled_matrix[5] + " \\end{bmatrix}\\]</p>"
+            document.getElementById("scalar_demo").innerHTML =  html_first_part + return_matrix_html() + html_second_part + html_third_part
+            MathJax.Hub.Queue(["Typeset",MathJax.Hub])
+
+        dot_product = (vector1, vector2) -> 
+            return (num * vector2[index] for num, index in vector1).reduce (x,y) -> x + y
+        
+        print_matrix_multiplication_html = (matrix) ->
+            html_first_part = "<p id=\"demo\">\\["
+            html_second_part = "\\begin{bmatrix}"
+            html_matrix_part = ""
+            for row,row_index in matrix
+                for element,element_index in row
+                    html_matrix_part = html_matrix_part + element
+                    html_matrix_part = html_matrix_part + " & " if element_index != row.length - 1
+                html_matrix_part = html_matrix_part + "\\\\" if row_index != matrix.length - 1
+            html_final_part = " \\end{bmatrix}\\]</p>"
+            document.getElementById("dot_product_demo").innerHTML =  html_first_part + return_matrix_html() + html_second_part + html_matrix_part + html_final_part
+            MathJax.Hub.Queue(["Typeset",MathJax.Hub])
+        
+        reorganize_matrix_for_easier_matrix_multiplication = (matrix1, matrix2) ->
+            new_matrix = []
+            for matrix_1_index in [0...matrix1.length] by 1
+                vector = []
+                for index in [0...matrix2.length] by 1
+                    vector.push(matrix2[index][matrix_1_index])
+                new_matrix.push(vector)
+            return new_matrix
+
+        matrix_multiplication = (matrix1, matrix2) ->
+	        return -1 if matrix1.length is not matrix2[0].length and matrix1[0].length is not matrix2.length
+	        matrix_2_dot_product_vectors = reorganize_matrix_for_easier_matrix_multiplication(matrix1,matrix2)
+	        result = []
+	        for matrix_1_index in [0...matrix1.length] by 1
+		        row = []
+		        for matrix_2_dot_product_vectors_index in [0...matrix_2_dot_product_vectors.length] by 1
+			        row.push(dot_product(matrix1[matrix_1_index],matrix_2_dot_product_vectors[matrix_2_dot_product_vectors_index]))
+	        	result.push(row)
+	        return result
+	    
+	    
+	        
+    </script>
+  </body>
+</html>
