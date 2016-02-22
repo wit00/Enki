@@ -45,19 +45,23 @@
         </div>
         <div class="jumbotron">
             <h1>Matrix Multiplication</h1>
-            <p>Now that we know how to add and subtract matrices, it's time to learn matrix multiplication.</p>
+            <p>Now that we know how to add and subtract matrices, it's time to learn matrix multiplication. Here is an example.</p>
         </div>
         <div class="row">
             <div class="col-xs-6">
                 <h2>Scalar Multiplication</h2>
-                <p>Multiplying a matrix by a number (a scalar) is called scalar multiplication. </p>
+                <p>Multiplying a matrix by a number (a scalar) is called scalar multiplication. Here is how it works. </p>
                 <p id="scalar_demo">
                 <script>get_initial_scalar_demo()</script>
                <div class="row">
                     <div class="col-xs-4">
+                        <% if signed_in? %>
                         <button type="button" class="btn btn-default" onclick="solve_matrix(return_scaled_matrix())">
                             Reload
                         </button>
+                        <% else %>
+                        <h3>Sign in to turn on card generation</h3>
+                        <% end %>
                     </div>
 
                     <div class="col-xs-4">
@@ -81,9 +85,13 @@
                 <script>get_initial_dot_product_demo()</script></p>
                 <div class="row">
                     <div class="col-xs-4">
+                        <%if signed_in? %>
                         <button type="button" class="btn btn-default" onclick="reload_dot_product_matrix()">
                             Reload
                         </button>
+                        <% else %>
+                            <h3>Sign in to turn on card generation</h3>
+                        <% end %>
                     </div>
                     <div class="col-xs-4">
                         <% if signed_in? %>

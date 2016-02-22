@@ -1,28 +1,26 @@
-== README
+README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Hi!
 
-Things you may want to cover:
+I'm Whitney, and this web app is my submission for the koding 2016 hackathon. 
 
-* Ruby version
+Enki is a place to learn math, 
+and this project is a start to much bigger system to help people learn math using spaced-repetition, 
+card generation, and lots and lots of content!
 
-* System dependencies
+What can you do with it now?
+You can sign in and out of the system. 
+You can create, edit, delete, and review your learning cards. 
+You can also generate cards with matrix multiplication examples.
 
-* Configuration
+What do I want to do with it later?
+I make little tools like this all the time for my own learning projects. 
+I want to do the same thing, just on a much bigger scale to make a comprehensive, free tool for learning math.
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+What did I use to make Enki?
+-Ruby Rails
+-CoffeeScript
+-Bootstrap
 
 
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+

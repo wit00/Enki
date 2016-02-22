@@ -7,7 +7,7 @@ class CardsController < ApplicationController
   rescue_from ActiveRecord::RecordNotFound, with: :no_cards_found
   def index
     if signed_in?
-      @cards = Card.all
+      @cards = Card.where(:user_id => @current_user.id)
     else
       flash[:danger] = "Sorry, you need to sign in or create an account before you can review your cards."
       redirect_to :back
@@ -19,7 +19,7 @@ class CardsController < ApplicationController
   def show
     if !signed_in? || Card.count < 1
       flash[:danger] = "Sorry, you need to sign in or create an account before you can review your cards."
-      redirect_to :back
+      redirect_to root_path
     end
   end
 
